@@ -24,7 +24,7 @@ Acesse os protótipos das telas do app no Figma clicando no link abaixo:
 ## Modelagem do Banco
 A modelagem do banco de dados foi projetada para armazenar informações de usuários (clientes e barbeiros), serviços oferecidos e agendamentos.
 
-- **Banco de dados:** SQLite
+- **Banco de dados:** PostgreSQL
 - **Tipo:** Relacional
 - **Diagrama Entidade-Relacionamento (DER):**
 
