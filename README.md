@@ -45,3 +45,9 @@ Abaixo, o cronograma de sprints para o desenvolvimento do **Cortaí!** até a en
 
 ## Conclusão
 Este app tem como objetivo melhorar a experiência tanto para clientes quanto para barbeiros, trazendo organização e praticidade. A personalização para cada barbearia garante que o **Cortaí!** seja uma solução única para cada negócio.
+
+## Como executar
+Para executar o projeto, clone o repositório base e então execute o seguinte comando:
+``npm install`` para baixar as dependências que estão na issue.
+
+Após instalado, verifique o ``package.json`` e selecione o comando para sua plataforma de interesse de desenvolvimento.
