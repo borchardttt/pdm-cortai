@@ -8,7 +8,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.cardWelcome}>
-        <Image source={require('@/assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('@/assets/icons/logo.png')} style={styles.logo} />
         <Text style={styles.title}>
           E aí, <Text style={styles.bold}>Usuário</Text>. O que manda hoje?
         </Text>
