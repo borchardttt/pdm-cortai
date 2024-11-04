@@ -1,50 +1,47 @@
-# Welcome to your Expo app 👋
+# Cortaí! - Seu cabelo na Régua!
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Sobre o App
+O **Cortaí!** é um aplicativo que visa facilitar o agendamento de cortes de cabelo para clientes e auxiliar barbeiros na gestão de suas agendas e ganhos diários. Ele proporciona praticidade para os clientes na hora de marcar um horário e eficiência para os barbeiros ao organizarem seus compromissos e visualizarem seus rendimentos.
 
-## Get started
+### Funcionalidades Prioritárias
+- [ ] **Agendamento de Cortes**: Permite que os clientes agendem cortes, visualizando a disponibilidade dos barbeiros.
+- [ ] **Cadastro de Clientes e Barbeiros**: Funcionalidade para criar perfis de clientes e barbeiros.
+- [ ] **Visualização de Agenda**: Barbeiros podem ver seus compromissos diários, semanais e mensais.
+- [ ] **Controle de Ganhos**: Barbeiros podem registrar e visualizar seus lucros diários.
+- [ ] **Notificações**: Alertas de lembretes de agendamentos tanto para clientes quanto para barbeiros.
 
-1. Install dependencies
+### Funcionalidades Futuras
+- [ ] **Avaliação dos Serviços**: Clientes poderão avaliar o atendimento e qualidade dos cortes.
+- [ ] **Relatórios Financeiros Avançados**: Estatísticas detalhadas sobre os ganhos dos barbeiros.
+- [ ] **Integração com Redes Sociais**: Compartilhamento de cortes nas redes sociais.
 
-   ```bash
-   npm install
-   ```
+## Protótipos de Tela
+Acesse os protótipos das telas do app no Figma clicando no link abaixo:
 
-2. Start the app
+[Protótipos no Figma](https://www.figma.com)
 
-   ```bash
-    npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## Modelagem do Banco
+A modelagem do banco de dados foi projetada para armazenar informações de usuários (clientes e barbeiros), serviços oferecidos e agendamentos.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Banco de dados:** PostgreSQL
+- **Tipo:** Relacional
+- **Diagrama Entidade-Relacionamento (DER):**
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+![Cortaí](https://github.com/user-attachments/assets/d9f416f9-7452-4a0a-9f6c-70ec8ece3897)
 
-## Get a fresh project
+> **Cardinalidades:**
+> - **users para appointments**: Um cliente pode ter muitos agendamentos, e um barbeiro pode estar em muitos agendamentos.
+> - **services para appointments**: Um serviço pode ser associado a muitos agendamentos.
+> - **appointments para earnings**: Um agendamento pode gerar um registro de ganho.
 
-When you're ready, run:
+## Planejamento de Sprints
+Abaixo, o cronograma de sprints para o desenvolvimento do **Cortaí!** até a entrega final do aplicativo.
 
-```bash
-npm run reset-project
-```
+### Sprint 1 (Semana 1 - 2)
+- [ ] Criação do esqueleto do app.
+- [ ] Definição das rotas entre as telas.
+- [ ] Desenvolvimento do layout inicial.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Conclusão
+Este app tem como objetivo melhorar a experiência tanto para clientes quanto para barbeiros, trazendo organização e praticidade. A personalização para cada barbearia garante que o **Cortaí!** seja uma solução única para cada negócio.
