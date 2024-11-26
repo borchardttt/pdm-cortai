@@ -1,31 +1,120 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function TabOneScreen() {
+  const navigation = useRouter();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <View style={styles.cardWelcome}>
+        <Image
+          source={require("@/assets/icons/logo.png")}
+          style={styles.logo}
+        />
+        <Text style={styles.title}>
+          E aí, <Text style={styles.bold}>Usuário</Text>. O que manda hoje?
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigation.navigate("/(tabs)/agendar-servico")}
+      >
+        <Image
+          source={require("@/assets/icons/calendar.png")}
+          style={styles.icon}
+        />
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>Agendar Serviço</Text>
+          <Text style={styles.cardDescription}>
+            Visualize as datas disponíveis para seu barbeiro favorito, escolha
+            seu serviço e agende, fácil fácil né?
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigation.navigate("/(tabs)/servicos-agendados")}
+      >
+        <Image
+          source={require("@/assets/icons/schedule.png")}
+          style={styles.icon}
+        />
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>Serviços Agendados</Text>
+          <Text style={styles.cardDescription}>
+            Confira aqui suas agendas e o status atual delas!
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: "Montserrat_400Regular",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: "#E6D9C0",
+  },
+  logo: {
+    height: 100,
+    width: 100,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
+    color: "#4F2E2E",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  bold: {
+    fontWeight: "bold",
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    backgroundColor: "#F0E7D8",
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  cardWelcome: {
+    marginTop: "5%",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F0E7D8",
+    padding: 10,
+    marginBottom: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  cardContent: {
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: "#555",
+    marginTop: 4,
+    textAlign: "justify",
+    flexWrap: "wrap",
+    maxWidth: "95%",
+  },
+  icon: {
+    height: 80,
+    width: 80,
+    marginRight: 15,
   },
 });
