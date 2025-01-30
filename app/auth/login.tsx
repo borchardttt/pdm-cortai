@@ -8,20 +8,43 @@ import {
   StyleSheet,
   Alert,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { apiService } from "@/services/apiService";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    if (email === "admin@cortai.com" && password === "123") {
-      Alert.alert("Login bem-sucedido!", "Bem-vindo de volta!");
-      router.push("/");
-    } else {
-      Alert.alert("Erro de login", "Usuário ou senha inválidos.");
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await apiService.authenticate(email, password);
+      Alert.alert("Login bem-sucedido!", `Bem-vindo, ${response.user.name}!`);
+      await AsyncStorage.setItem('user', JSON.stringify(response.user));
+
+      if (response.user.type === 'barbeiro') {
+        router.push("/barbeiro/barbeiro-home");
+      } else {
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.error("Erro ao autenticar:", error?.response?.data || error.message);
+      Alert.alert(
+        "Erro de login",
+        error?.response?.data?.message || "Usuário ou senha inválidos."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,6 +59,7 @@ export default function Login() {
         onChangeText={setEmail}
         placeholder="Digite seu email"
         keyboardType="email-address"
+        autoCapitalize="none"
       />
       <Text style={styles.inputLabel}>Senha</Text>
       <TextInput
@@ -45,7 +69,11 @@ export default function Login() {
         placeholder="Digite sua senha"
         secureTextEntry
       />
-      <Button title="Entrar" onPress={handleLogin} color="#4F2E2E" />
+      {loading ? (
+        <ActivityIndicator size="large" color="#4F2E2E" />
+      ) : (
+        <Button title="Entrar" onPress={handleLogin} color="#4F2E2E" />
+      )}
     </View>
   );
 }
@@ -85,3 +113,4 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+

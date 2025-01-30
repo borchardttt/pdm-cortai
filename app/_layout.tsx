@@ -4,6 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { Button } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -56,6 +57,22 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="auth/login" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="barbeiro/barbeiro-home"
+          options={{
+            title: "Home do Barbeiro",
+            headerShown: true,
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' },
+            headerRight: () => (
+              <Button
+                onPress={() => alert('Informações')}
+                title="Info"
+                color="#fff"
+              />
+            ),
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

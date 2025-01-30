@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
 
-export default function TabOneScreen() {
+export default function BarbeiroHome() {
   const navigation = useRouter();
   const [user, setUser] = useState(null);
 
@@ -13,8 +13,7 @@ export default function TabOneScreen() {
         const userData = await AsyncStorage.getItem('user');
         if (userData) {
           setUser(JSON.parse(userData));
-          console.log('dados do usuário:');
-          console.log(userData);
+          console.log('dados do usuário:', userData);
         }
       } catch (error) {
         console.error("Erro ao recuperar os dados do usuário:", error);
@@ -32,9 +31,9 @@ export default function TabOneScreen() {
           style={styles.logo}
         />
         <Text style={styles.title}>
-          {/* @ts-ignore */}
-          E aí, <Text style={styles.bold}>{user ? user.name.split(' ')[0] : 'Usuário'}</Text>. O que manda hoje?
-          </Text>
+					{/* @ts-ignore */}
+          Seja bem vindo, barbeiro <Text style={styles.bold}>{user ? user.name.split(' ')[0] : 'Barbeiro'}</Text>.
+        </Text>
       </View>
 
       <TouchableOpacity
@@ -46,10 +45,9 @@ export default function TabOneScreen() {
           style={styles.icon}
         />
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>Agendar Serviço</Text>
+          <Text style={styles.cardTitle}>Ganhos Mensais</Text>
           <Text style={styles.cardDescription}>
-            Visualize as datas disponíveis para seu barbeiro favorito, escolha
-            seu serviço e agende, fácil fácil né?
+            Visualize os valores acumulados do seu mês.
           </Text>
         </View>
       </TouchableOpacity>
@@ -72,7 +70,6 @@ export default function TabOneScreen() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
