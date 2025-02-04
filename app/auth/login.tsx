@@ -1,4 +1,3 @@
-// app/auth/Login.tsx
 import React, { useState } from "react";
 import {
   View,
@@ -9,6 +8,11 @@ import {
   Alert,
   Image,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform
 } from "react-native";
 import { useRouter } from "expo-router";
 import { apiService } from "@/services/apiService";
@@ -49,41 +53,55 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require("@/assets/icons/logo.png")} style={styles.logo} />
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.inputLabel}>Email</Text>
-      <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Digite seu email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <Text style={styles.inputLabel}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Digite sua senha"
-        secureTextEntry
-      />
-      {loading ? (
-        <ActivityIndicator size="large" color="#4F2E2E" />
-      ) : (
-        <Button title="Entrar" onPress={handleLogin} color="#4F2E2E" />
-      )}
-    </View>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Image source={require("@/assets/icons/logo.png")} style={styles.logo} />
+          <Text style={styles.title}>Login</Text>
+          <Text style={styles.inputLabel}>Email</Text>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="Digite seu email"
+            placeholderTextColor="#000"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <Text style={styles.inputLabel}>Senha</Text>
+          <TextInput
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Digite sua senha"
+            placeholderTextColor="#000"
+            secureTextEntry
+          />
+
+          {loading ? (
+            <ActivityIndicator size="large" color="#4F2E2E" />
+          ) : (
+            <Button title="Entrar" onPress={handleLogin} color="#4F2E2E" />
+          )}
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#E6D9C0",
+  },
+  scrollContainer: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#E6D9C0",
     padding: 20,
   },
   title: {

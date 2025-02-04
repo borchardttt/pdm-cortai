@@ -38,7 +38,7 @@ export default function BarbeiroHome() {
 
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate("/(tabs)/agendar-servico")}
+        onPress={() => navigation.navigate("/barbeiro/ganhos-semanais")}
       >
         <Image
           source={require("@/assets/icons/calendar.png")}
@@ -54,7 +54,7 @@ export default function BarbeiroHome() {
 
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate("/(tabs)/servicos-agendados")}
+        onPress={() => navigation.navigate("/barbeiro/servicos-agendados")}
       >
         <Image
           source={require("@/assets/icons/schedule.png")}

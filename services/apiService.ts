@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { UserInterface, AuthResponse, Service, Appointment, Earning } from '@/interfaces/common-interfaces';
+
 const API_URL = 'https://restapi-cortai.onrender.com/api';
-
-
 
 export const apiService = {
   createUser: async (user: UserInterface) => {
@@ -45,21 +44,41 @@ export const apiService = {
     return response.data;
   },
 
+  getBarberAppointments: async (barberId: number) => {
+    const response = await axios.get<Appointment[]>(`${API_URL}/appointments/barber/${barberId}`);
+    return response.data;
+  },
+
   createAppointment: async (appointment: Appointment) => {
     try {
-        const response = await axios.post<Appointment>(`${API_URL}/appointments`, appointment);
-        return response.data;
+      const response = await axios.post<Appointment>(`${API_URL}/appointments`, appointment);
+      return response.data;
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error("Erro ao criar agendamento:", error.response?.data);
-            throw new Error(error.response?.data || "Erro desconhecido ao criar agendamento");
-        } else {
-            console.error("Erro inesperado:", error);
-            throw new Error("Erro inesperado ao criar agendamento");
-        }
+      if (axios.isAxiosError(error)) {
+        console.error("Erro ao criar agendamento:", error.response?.data);
+        throw new Error(error.response?.data || "Erro desconhecido ao criar agendamento");
+      } else {
+        console.error("Erro inesperado:", error);
+        throw new Error("Erro inesperado ao criar agendamento");
+      }
     }
-},
+  },
 
+  // ✅ Função unificada para atualizar status e criar earning
+  completeAppointment: async (appointmentId: number) => {
+    try {
+      const response = await axios.put(`${API_URL}/appointments/${appointmentId}/complete`);
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erro ao concluir agendamento:", error.response?.data);
+        throw new Error(error.response?.data || "Erro desconhecido ao concluir agendamento");
+      } else {
+        console.error("Erro inesperado:", error);
+        throw new Error("Erro inesperado ao concluir agendamento");
+      }
+    }
+  },
 
   getEarnings: async () => {
     const response = await axios.get<Earning[]>(`${API_URL}/earnings`);
@@ -68,11 +87,6 @@ export const apiService = {
 
   getBarberEarnings: async (barberId: number) => {
     const response = await axios.get<Earning[]>(`${API_URL}/earnings/barber/${barberId}`);
-    return response.data;
-  },
-
-  createEarning: async (earning: Earning) => {
-    const response = await axios.post<Earning>(`${API_URL}/earnings`, earning);
     return response.data;
   },
 

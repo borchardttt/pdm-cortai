@@ -4,13 +4,15 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Button } from "react-native";
+import { Button, Pressable } from "react-native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import Colors from "@/constants/Colors";
+import { Stack, Link } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/components/useColorScheme";
+import { useRouter } from "expo-router";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,16 +53,55 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-
+  const router = useRouter();
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="auth/login" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen 
+        <Stack.Screen name="barbeiro/ganhos-semanais" options={{
+          title: "Ganhos Semanais", headerShown: true,headerLeft: () => (
+              <Button
+              onPress={() => router.back()}
+              title="Voltar"
+              color="#fff"
+              />
+            ) }}
+        />
+        <Stack.Screen
           name="barbeiro/barbeiro-home"
           options={{
             title: "Home do Barbeiro",
+            headerShown: true,
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' },
+            headerRight: () => (
+              <Link href="/auth/login" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <FontAwesome
+                      name="sign-out"
+                      size={25}
+                      color={Colors[colorScheme ?? "light"].text}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+            headerLeft: () => (
+              <Button
+              onPress={() => router.back()}
+              title="Voltar"
+              color="#fff"
+              />
+            )
+          }}
+        />
+        <Stack.Screen
+          name="barbeiro/servicos-agendados"
+          options={{
+            title: "Serviços Agendados",
             headerShown: true,
             headerTintColor: '#fff',
             headerTitleStyle: { fontWeight: 'bold' },
@@ -71,6 +112,13 @@ function RootLayoutNav() {
                 color="#fff"
               />
             ),
+            headerLeft: () => (
+              <Button
+              onPress={() => router.back()}
+              title="Voltar"
+              color="#fff"
+              />
+            )
           }}
         />
       </Stack>
