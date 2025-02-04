@@ -1,11 +1,13 @@
-import axios from 'axios';
-import { UserInterface, AuthResponse, Service, Appointment, Earning } from '@/interfaces/common-interfaces';
+import axios from "axios";
+import { UserInterface, AuthResponse, Service, Appointment, Earning } from "@/interfaces/common-interfaces";
+import { UserSchema, AuthSchema, ServiceSchema, AppointmentSchema, EarningSchema } from "@/tests/schemas/validationSchema";
 
-const API_URL = 'https://restapi-cortai.onrender.com/api';
+const API_URL = "https://restapi-cortai.onrender.com/api";
 
 export const apiService = {
   createUser: async (user: UserInterface) => {
-    const response = await axios.post<UserInterface>(`${API_URL}/users`, user);
+    const validatedUser = UserSchema.parse(user);
+    const response = await axios.post<UserInterface>(`${API_URL}/users`, validatedUser);
     return response.data;
   },
 
@@ -20,7 +22,8 @@ export const apiService = {
   },
 
   authenticate: async (email: string, password: string) => {
-    const response = await axios.post<AuthResponse>(`${API_URL}/auth`, { email, password });
+    const validatedData = AuthSchema.parse({ email, password });
+    const response = await axios.post<AuthResponse>(`${API_URL}/auth`, validatedData);
     return response.data;
   },
 
@@ -30,7 +33,8 @@ export const apiService = {
   },
 
   createService: async (service: Service) => {
-    const response = await axios.post<Service>(`${API_URL}/services`, service);
+    const validatedService = ServiceSchema.parse(service);
+    const response = await axios.post<Service>(`${API_URL}/services`, validatedService);
     return response.data;
   },
 
@@ -51,32 +55,22 @@ export const apiService = {
 
   createAppointment: async (appointment: Appointment) => {
     try {
-      const response = await axios.post<Appointment>(`${API_URL}/appointments`, appointment);
+      const validatedAppointment = AppointmentSchema.parse(appointment);
+      const response = await axios.post<Appointment>(`${API_URL}/appointments`, validatedAppointment);
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erro ao criar agendamento:", error.response?.data);
-        throw new Error(error.response?.data || "Erro desconhecido ao criar agendamento");
-      } else {
-        console.error("Erro inesperado:", error);
-        throw new Error("Erro inesperado ao criar agendamento");
-      }
+      console.error("Erro ao validar agendamento:", error);
+      throw new Error("Dados do agendamento inválidos");
     }
   },
 
-  // ✅ Função unificada para atualizar status e criar earning
   completeAppointment: async (appointmentId: number) => {
     try {
       const response = await axios.put(`${API_URL}/appointments/${appointmentId}/complete`);
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erro ao concluir agendamento:", error.response?.data);
-        throw new Error(error.response?.data || "Erro desconhecido ao concluir agendamento");
-      } else {
-        console.error("Erro inesperado:", error);
-        throw new Error("Erro inesperado ao concluir agendamento");
-      }
+      console.error("Erro ao concluir agendamento:", error);
+      throw new Error("Erro ao concluir agendamento");
     }
   },
 
