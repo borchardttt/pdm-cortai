@@ -29,7 +29,7 @@ export const AppointmentSchema = z.object({
   appointment_date: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Data inválida",
   }),
-  status: z.enum(["pendente", "realizado", "cancelado"]),
+  status: z.enum(["confirmado", "realizado", "cancelado"]),
   value: z.number().positive("Valor deve ser positivo"),
 });
 
